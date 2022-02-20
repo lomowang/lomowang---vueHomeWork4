@@ -1,6 +1,8 @@
 // 使用import  導入vue的 將CDN(沒導入vue就不會出現)
 
 import { createApp } from "https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.29/vue.esm-browser.min.js";
+import pagination from "./pagination.js";
+
 const apiUrl="https://vue3-course-api.hexschool.io/v2";
 const  apiPath= "lomo1986";
 
@@ -9,6 +11,9 @@ let productsModal = {};
 let delproductsModal = {};
 
 createApp({
+  components:{
+    pagination
+  },
   data() {
     return {
       products: [],
@@ -17,6 +22,7 @@ createApp({
         imagesUrl: [],
       },
       New: false,
+      pagination:{},
     }
   },
   mounted() {
@@ -52,11 +58,14 @@ createApp({
       })
     },
     //取得相關資料
-    getData() {
-      axios.get(`${apiUrl}/api/${apiPath}/admin/products`)
+            // 參數預設值 再不帶入任何參數之下，顯示頁面都會是第1頁
+    getData(page = 1) {
+      axios.get(`${apiUrl}/api/${apiPath}/admin/products/?page=${page}`)
         //接收
         .then((res) => {
           this.products = res.data.products;
+          // 分頁功能
+          this.pagination = res.data.pagination;
         })
         .catch((err) => {
             console.log(err);
