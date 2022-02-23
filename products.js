@@ -123,6 +123,13 @@ createApp({
       });
     },
 }
-}).mount('#app');
+})
+
+.component('productsModal',{
+  props:['tempProduct'],
+  template:`#templateForProductsModal`
+})
+
+.mount('#app');
 
 
