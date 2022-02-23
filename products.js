@@ -92,6 +92,43 @@ createApp({
         this.tempProduct = { ...item};
       }
     },
+    // updateProduct(){ 
+    //   // 新增
+    //   let url = `${apiUrl}/api/${apiPath}/admin/product`;
+    //   let method = 'post';
+    //   // 注意有 ! (反轉)
+    //   if (!this.New){
+    //     url = `${apiUrl}/api/${apiPath}/admin/product/${this.tempProduct.id}`;
+    //     method = 'put';
+    // }
+
+    // axios[method](url,{data: this.tempProduct})
+    // .then((res) => {
+    //   // 成功訊息
+    //   alert(res.data.message);
+    //   productsModal.hide();
+    //   this.getData();
+    // }).catch((err) =>{
+    //   // 錯誤訊息
+    //   alert(err.data.message);
+    // });
+    // },
+    delProduct(){
+      // 刪除 
+      let url = `${apiUrl}/api/${apiPath}/admin/product/${this.tempProduct.id}`;
+      axios.delete(url)
+        .then( res=> {
+        this.getData();
+        delproductsModal.hide();
+      });
+    },
+}
+})
+
+.component('productsModal',{
+  props:['tempProduct'],
+  template:`#templateForProductsModal`,
+  methods:{
     updateProduct(){ 
       // 新增
       let url = `${apiUrl}/api/${apiPath}/admin/product`;
@@ -107,27 +144,15 @@ createApp({
       // 成功訊息
       alert(res.data.message);
       productsModal.hide();
-      this.getData();
+      // this.getData(); 沒有 get product(外層的方法)
+      this.$emit('get-product')
     }).catch((err) =>{
       // 錯誤訊息
       alert(err.data.message);
     });
     },
-    delProduct(){
-      // 刪除 
-      let url = `${apiUrl}/api/${apiPath}/admin/product/${this.tempProduct.id}`;
-      axios.delete(url)
-        .then( res=> {
-        this.getData();
-        delproductsModal.hide();
-      });
-    },
-}
-})
 
-.component('productsModal',{
-  props:['tempProduct'],
-  template:`#templateForProductsModal`
+  }
 })
 
 .mount('#app');

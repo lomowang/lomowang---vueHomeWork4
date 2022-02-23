@@ -90,10 +90,8 @@
   <!-- 增加產品modal -->
   <div id="productsModal" ref="productsModal" class="modal fade" tabindex="-1" aria-labelledby="productsModal"
   aria-hidden="true">
-  <products-Modal :temp-product="tempProduct">
-
-
-  </products-Modal>
+  <products-Modal 
+    :temp-product="tempProduct" v-on:get-product="getData"></products-Modal>
 
   </div>
 
